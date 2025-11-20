@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { Navbar } from '../components/Navbar';
-import Footer from '../components/Footer';
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -15,21 +13,45 @@ export default function Contact() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  // Email submit
+  const handleEmailSubmit = (e) => {
     e.preventDefault();
-    alert(`Thank you, ${form.name}! Your message has been sent.`);
-    // Here you can add your actual submission logic (API call, etc)
+
+    const mailto = `mailto:pocketofparadisetravel@gmail.com?subject=${encodeURIComponent(
+      form.subject
+    )}&body=${encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`
+    )}`;
+
+    window.location.href = mailto;
+  };
+
+  // SMS submit
+  const handleSmsSubmit = (e) => {
+    e.preventDefault();
+
+    const smsNumber = '+254722787851';
+
+    const smsBody = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\nSubject: ${form.subject}\nMessage: ${form.message}`
+    );
+
+    const smsLink = `sms:${smsNumber}?body=${smsBody}`;
+
+    window.location.href = smsLink;
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10 font-poppins">
-        {/* <Navbar /> */}
-      <h2 className="text-3xl font-bold text-primary mb-6 text-center">Contact Us</h2>
-
-      <form onSubmit={handleSubmit} className="space-y-5">
+    <div className="max-w-3xl mx-auto p-8 bg-white rounded-2xl shadow-xl mt-12 font-poppins">
+      <h2 className="text-4xl font-extrabold text-primary mb-10 text-center tracking-tight">
+        Contact Us
+      </h2>
+      <form className="space-y-6">
         {/* Name */}
         <div>
-          <label htmlFor="name" className="block text-gray-700 font-semibold mb-1">Full Name</label>
+          <label htmlFor="name" className="block text-gray-800 font-semibold mb-2">
+            Full Name
+          </label>
           <input
             type="text"
             id="name"
@@ -37,14 +59,16 @@ export default function Contact() {
             value={form.name}
             onChange={handleChange}
             required
-            placeholder="John Doe"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            placeholder="name"
+            className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-primary/50 transition"
           />
         </div>
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="block text-gray-700 font-semibold mb-1">Email Address</label>
+          <label htmlFor="email" className="block text-gray-800 font-semibold mb-2">
+            Email Address
+          </label>
           <input
             type="email"
             id="email"
@@ -52,14 +76,16 @@ export default function Contact() {
             value={form.email}
             onChange={handleChange}
             required
-            placeholder="john@example.com"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            placeholder="email"
+            className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-primary/50 transition"
           />
         </div>
 
         {/* Subject */}
         <div>
-          <label htmlFor="subject" className="block text-gray-700 font-semibold mb-1">Subject</label>
+          <label htmlFor="subject" className="block text-gray-800 font-semibold mb-2">
+            Subject
+          </label>
           <input
             type="text"
             id="subject"
@@ -68,36 +94,46 @@ export default function Contact() {
             onChange={handleChange}
             required
             placeholder="Subject of your message"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-primary/50 transition"
           />
         </div>
 
         {/* Message */}
         <div>
-          <label htmlFor="message" className="block text-gray-700 font-semibold mb-1">Message</label>
+          <label htmlFor="message" className="block text-gray-800 font-semibold mb-2">
+            Message
+          </label>
           <textarea
             id="message"
             name="message"
             value={form.message}
             onChange={handleChange}
             required
-            rows="5"
+            rows="6"
             placeholder="Write your message here..."
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+            className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-primary/50 resize-none transition"
           />
         </div>
 
-        {/* Submit Button */}
-        <div>
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row gap-5 mt-6">
           <button
             type="submit"
-            className="w-full py-3 rounded-lg bg-primary text-white font-bold hover:bg-primary/90 transition"
+            onClick={handleEmailSubmit}
+            className="flex-1 py-4 rounded-xl bg-primary text-white font-extrabold text-lg hover:bg-primary/90 transition shadow-md shadow-primary/30"
           >
-            Send Message
+            Send via Email
           </button>
+
+          {/* <button
+            type="submit"
+            onClick={handleSmsSubmit}
+            className="flex-1 py-4 rounded-xl bg-secondary text-white font-extrabold text-lg hover:bg-secondary/90 transition shadow-md shadow-secondary/30"
+          >
+            Send via SMS
+          </button> */}
         </div>
       </form>
-   
     </div>
   );
 }

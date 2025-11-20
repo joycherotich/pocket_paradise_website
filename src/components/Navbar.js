@@ -48,8 +48,8 @@ export function Navbar() {
           {/* Right actions */}
           <div className="hidden md:flex items-center gap-4">
             <a href="tel:+254700000000" className="text-sm text-gray-600">
-              +254 710711161
-            </a>
+            +254 722 787 851
+                        </a>
             <Link
               to="/login"
             //   className="px-4 py-2 border rounded-lg text-sm font-semibold text-primary hover:bg-secondary hover:text-white transition"

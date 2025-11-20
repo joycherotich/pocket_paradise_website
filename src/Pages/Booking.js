@@ -18,8 +18,21 @@ export default function Booking() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Thank you, ${form.name}! Your booking request for ${form.destination} is received.`);
-    // Here you can add actual submission logic (API call, etc)
+
+    const subject = encodeURIComponent(`Booking Request from ${form.name}`);
+    const body = encodeURIComponent(
+      `Name: ${form.name}\n` +
+      `Email: ${form.email}\n` +
+      `Phone: ${form.phone || 'N/A'}\n` +
+      `Destination: ${form.destination}\n` +
+      `Guests: ${form.guests}\n` +
+      `Travel Date: ${form.date}\n` +
+      `Special Requests:\n${form.specialRequests || 'None'}`
+    );
+
+    const mailtoLink = `mailto:pocketofparadisetravel@gmail.com?subject=${subject}&body=${body}`;
+
+    window.location.href = mailtoLink;
   };
 
   return (
@@ -27,6 +40,7 @@ export default function Booking() {
       <h2 className="text-3xl font-bold text-primary mb-6 text-center">Book Your Trip</h2>
 
       <form onSubmit={handleSubmit} className="space-y-5">
+        {/* ... your inputs here ... */}
         {/* Name */}
         <div>
           <label htmlFor="name" className="block text-gray-700 font-semibold mb-1">Full Name</label>
@@ -38,7 +52,7 @@ export default function Booking() {
             onChange={handleChange}
             required
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-            placeholder="John Doe"
+            placeholder="full name"
           />
         </div>
 
@@ -53,7 +67,7 @@ export default function Booking() {
             onChange={handleChange}
             required
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-            placeholder="john@example.com"
+            placeholder="email"
           />
         </div>
 
