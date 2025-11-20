@@ -16,3 +16,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* Splash ripple effect */
+.splash-container::after {
+  content: "";
+  @apply absolute top-1/2 left-1/2 w-[120%] h-[120%] rounded-full bg-white/30 pointer-events-none;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.splash-container:hover::after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* .brush-mask {
+  mask-image: url('/src/assets/brush-mask.png');
+  -webkit-mask-image: url('/src/assets/brush-mask.png');
+  mask-size: cover;
+  -webkit-mask-size: cover;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+} */
